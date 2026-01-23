@@ -82,7 +82,7 @@ export function Navigation() {
 
               <Button variant="hero" size="sm" asChild>
                 <a
-                  href="https://drive.google.com/file/d/1ogtYmgHvA5KvqM93sEZGLnqG3D6i301V/view?usp=sharing"
+                  href="https://drive.google.com/file/d/1N6ymRfrGlAjYNSuUumhj6nBNBBXsSj17/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -139,7 +139,7 @@ export function Navigation() {
                 asChild
               >
                 <a
-                  href="https://drive.google.com/file/d/1ogtYmgHvA5KvqM93sEZGLnqG3D6i301V/view?usp=sharing"
+                  href="https://drive.google.com/file/d/1N6ymRfrGlAjYNSuUumhj6nBNBBXsSj17/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
