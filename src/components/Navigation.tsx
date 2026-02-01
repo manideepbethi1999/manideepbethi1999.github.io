@@ -19,53 +19,49 @@ export function Navigation() {
 
   const AUDIO_URL = "/sleep.mp3";
 
-  // Handle Audio Playback on Click
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    audio.volume = 0.4;
-
-    const startPlayback = async () => {
-      if (!hasUserInteracted && !isPlaying) {
-        try {
-          await audio.play();
+  // Function to start audio (to be called on user interaction)
+  const startAudio = () => {
+    if (audioRef.current && !isPlaying) {
+      audioRef.current.play()
+        .then(() => {
           setHasUserInteracted(true);
-          cleanup();
-        } catch (err) {
-          // Silent catch for autoplay restrictions
-        }
+        })
+        .catch(err => {
+          console.log("Audio start failed:", err);
+        });
+    } else if (audioRef.current && isPlaying) {
+        // If already playing, just mark as interacted
+        setHasUserInteracted(true);
+    }
+  };
+
+  // Global listener for the very first interaction
+  useEffect(() => {
+    const handleGlobalInteraction = () => {
+      if (!hasUserInteracted) {
+        startAudio();
       }
     };
 
-    const cleanup = () => {
-      window.removeEventListener('click', startPlayback);
-      window.removeEventListener('touchstart', startPlayback);
+    window.addEventListener('click', handleGlobalInteraction, { once: true });
+    window.addEventListener('touchstart', handleGlobalInteraction, { once: true });
+
+    return () => {
+      window.removeEventListener('click', handleGlobalInteraction);
+      window.removeEventListener('touchstart', handleGlobalInteraction);
     };
-
-    window.addEventListener('click', startPlayback);
-    window.addEventListener('touchstart', startPlayback);
-
-    return cleanup;
   }, [hasUserInteracted, isPlaying]);
 
-  const togglePlayback = () => {
+  const togglePlayback = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     if (!audioRef.current) return;
     
-    setHasUserInteracted(true); // Mark that user has interacted
+    setHasUserInteracted(true);
     
     if (isPlaying) {
       audioRef.current.pause();
     } else {
-      audioRef.current.play().catch(err => {
-        console.error("Playback failed:", err);
-        // If it's a permission error, we might need to unmute first
-        if (err.name === 'NotAllowedError') {
-          // Some browsers require unmuting first
-          audioRef.current!.muted = false;
-          audioRef.current!.play().catch(console.error);
-        }
-      });
+      audioRef.current.play().catch(console.error);
     }
   };
 
@@ -123,7 +119,7 @@ export function Navigation() {
               <a
                 href="#"
                 className="group flex items-center gap-2 font-display font-bold tracking-tight text-foreground hover:text-primary transition-colors relative"
-                onClick={() => setHasUserInteracted(true)}
+                onClick={startAudio}
               >
                 {/* Logo icon */}
                 <div className="w-10 h-10 rounded-lg bg-gradient-primary/20 border border-primary/40 overflow-hidden flex items-center justify-center group-hover:border-primary/80 group-hover:bg-gradient-primary/30 transition-all duration-300">
@@ -188,7 +184,7 @@ export function Navigation() {
                   key={link.name}
                   href={link.href}
                   className="group relative text-muted-foreground hover:text-foreground transition-colors text-sm tracking-wide font-medium"
-                  onClick={() => setHasUserInteracted(true)}
+                  onClick={startAudio}
                 >
                   <span className="relative z-10">{link.name}</span>
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
@@ -202,7 +198,7 @@ export function Navigation() {
                   href="https://drive.google.com/file/d/1N6ymRfrGlAjYNSuUumhj6nBNBBXsSj17/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => setHasUserInteracted(true)}
+                  onClick={startAudio}
                 >
                   Resume
                 </a>
@@ -218,7 +214,7 @@ export function Navigation() {
                 aria-expanded={isMobileMenuOpen}
                 onClick={() => {
                   setIsMobileMenuOpen(!isMobileMenuOpen);
-                  setHasUserInteracted(true);
+                  startAudio();
                 }}
                 className="relative flex items-center justify-center w-10 h-10 rounded-xl border border-border bg-background/60 hover:bg-accent transition-all focus-visible:ring-2 focus-visible:ring-primary"
               >
@@ -248,7 +244,7 @@ export function Navigation() {
                   href={link.href}
                   onClick={() => {
                     setIsMobileMenuOpen(false);
-                    setHasUserInteracted(true);
+                    startAudio();
                   }}
                   className="text-foreground bg-muted/40 hover:bg-primary/10 border border-transparent hover:border-primary/20 px-4 py-3 rounded-xl text-sm tracking-wide font-medium text-center transition-all"
                 >
@@ -266,7 +262,7 @@ export function Navigation() {
                   href="https://drive.google.com/file/d/1N6ymRfrGlAjYNSuUumhj6nBNBBXsSj17/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => setHasUserInteracted(true)}
+                  onClick={startAudio}
                 >
                   Resume
                 </a>
