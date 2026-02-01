@@ -59,8 +59,8 @@ export function HeroSection() {
 
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Enhanced Background Elements */}
-      <div className="absolute inset-0 bg-gradient-subtle" />
+      {/* Enhanced Background Elements - Made transparent to show StarField */}
+      <div className="absolute inset-0 bg-transparent" />
       
       {/* Animated gradient orbs that follow mouse */}
       <div 
