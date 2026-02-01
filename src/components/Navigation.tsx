@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { Menu, X, Volume2, VolumeX } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
@@ -13,69 +13,6 @@ const navLinks = [
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [hasUserInteracted, setHasUserInteracted] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  const AUDIO_URL = "/sleep.mp3";
-
-  // Function to start audio (to be called on user interaction)
-  const startAudio = () => {
-    if (audioRef.current && !isPlaying) {
-      audioRef.current.play()
-        .then(() => {
-          setHasUserInteracted(true);
-        })
-        .catch(err => {
-          console.log("Audio start failed:", err);
-        });
-    } else if (audioRef.current && isPlaying) {
-        // If already playing, just mark as interacted
-        setHasUserInteracted(true);
-    }
-  };
-
-  // Global listener for the very first interaction
-  useEffect(() => {
-    const handleGlobalInteraction = () => {
-      if (!hasUserInteracted) {
-        startAudio();
-      }
-    };
-
-    window.addEventListener('click', handleGlobalInteraction, { once: true });
-    window.addEventListener('touchstart', handleGlobalInteraction, { once: true });
-
-    return () => {
-      window.removeEventListener('click', handleGlobalInteraction);
-      window.removeEventListener('touchstart', handleGlobalInteraction);
-    };
-  }, [hasUserInteracted, isPlaying]);
-
-  const togglePlayback = (e?: React.MouseEvent) => {
-    if (e) e.stopPropagation();
-    if (!audioRef.current) return;
-    
-    setHasUserInteracted(true);
-    
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play().catch(console.error);
-    }
-  };
-
-  // Enhanced audio error handling
-  const handleAudioError = (e: React.SyntheticEvent<HTMLAudioElement>) => {
-    const target = e.currentTarget;
-    console.error("Audio Error:", {
-      errorCode: target.error?.code,
-      message: target.error?.message,
-      src: target.src,
-      networkState: target.networkState
-    });
-    setIsPlaying(false);
-  };
 
   // Scroll listener
   useEffect(() => {
@@ -113,13 +50,11 @@ export function Navigation() {
       >
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            {/* Logo & Audio Container */}
+            {/* Logo */}
             <div className="flex items-center gap-4">
-              {/* Logo */}
               <a
                 href="#"
                 className="group flex items-center gap-2 font-display font-bold tracking-tight text-foreground hover:text-primary transition-colors relative"
-                onClick={startAudio}
               >
                 {/* Logo icon */}
                 <div className="w-10 h-10 rounded-lg bg-gradient-primary/20 border border-primary/40 overflow-hidden flex items-center justify-center group-hover:border-primary/80 group-hover:bg-gradient-primary/30 transition-all duration-300">
@@ -127,54 +62,6 @@ export function Navigation() {
                 </div>
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary group-hover:w-full transition-all duration-300" />
               </a>
-
-              {/* Audio Toggle Button */}
-              <button
-                onClick={togglePlayback}
-                className="group relative flex items-center justify-center w-10 h-10 rounded-xl border border-border bg-background/60 hover:bg-accent transition-all focus-visible:ring-2 focus-visible:ring-primary overflow-hidden"
-                aria-label={isPlaying ? "Mute music" : "Play music"}
-              >
-                <div className={`transition-all duration-300 ${isPlaying ? 'scale-110 text-primary' : 'scale-90 text-muted-foreground'}`}>
-                  {isPlaying ? (
-                    <div className="relative">
-                      <Volume2 size={20} />
-                      <span className="absolute -top-1 -right-1 flex h-2 w-2">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                      </span>
-                    </div>
-                  ) : (
-                    <VolumeX size={20} />
-                  )}
-                </div>
-                {/* Visual Audio Waveform Animation (Subtle) */}
-                {isPlaying && (
-                  <div className="absolute bottom-0 left-0 right-0 flex items-end justify-center gap-[2px] h-1.5 pb-1 opacity-50">
-                    {[1, 2, 3, 4].map((i) => (
-                      <div
-                        key={i}
-                        className="w-0.5 bg-primary rounded-full animate-music-bar"
-                        style={{ 
-                          height: '100%',
-                          animationDelay: `${i * 0.1}s`,
-                          animationDuration: '0.8s'
-                        }}
-                      />
-                    ))}
-                  </div>
-                )}
-              </button>
-
-              <audio 
-                ref={audioRef} 
-                src={AUDIO_URL} 
-                loop 
-                preload="auto"
-                muted={false}
-                onPlay={() => setIsPlaying(true)}
-                onPause={() => setIsPlaying(false)}
-                onError={handleAudioError}
-              />
             </div>
 
             {/* Desktop Menu */}
@@ -184,7 +71,6 @@ export function Navigation() {
                   key={link.name}
                   href={link.href}
                   className="group relative text-muted-foreground hover:text-foreground transition-colors text-sm tracking-wide font-medium"
-                  onClick={startAudio}
                 >
                   <span className="relative z-10">{link.name}</span>
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
@@ -198,7 +84,6 @@ export function Navigation() {
                   href="https://drive.google.com/file/d/1N6ymRfrGlAjYNSuUumhj6nBNBBXsSj17/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={startAudio}
                 >
                   Resume
                 </a>
@@ -214,7 +99,6 @@ export function Navigation() {
                 aria-expanded={isMobileMenuOpen}
                 onClick={() => {
                   setIsMobileMenuOpen(!isMobileMenuOpen);
-                  startAudio();
                 }}
                 className="relative flex items-center justify-center w-10 h-10 rounded-xl border border-border bg-background/60 hover:bg-accent transition-all focus-visible:ring-2 focus-visible:ring-primary"
               >
@@ -244,7 +128,6 @@ export function Navigation() {
                   href={link.href}
                   onClick={() => {
                     setIsMobileMenuOpen(false);
-                    startAudio();
                   }}
                   className="text-foreground bg-muted/40 hover:bg-primary/10 border border-transparent hover:border-primary/20 px-4 py-3 rounded-xl text-sm tracking-wide font-medium text-center transition-all"
                 >
@@ -262,7 +145,6 @@ export function Navigation() {
                   href="https://drive.google.com/file/d/1N6ymRfrGlAjYNSuUumhj6nBNBBXsSj17/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={startAudio}
                 >
                   Resume
                 </a>
