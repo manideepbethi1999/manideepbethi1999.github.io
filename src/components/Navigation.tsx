@@ -19,7 +19,7 @@ export function Navigation() {
 
   const AUDIO_URL = "/sleep.mp3";
 
-  // Handle Audio Playback on Interation (including Scroll)
+  // Handle Audio Playback on Click
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -33,31 +33,18 @@ export function Navigation() {
           setHasUserInteracted(true);
           cleanup();
         } catch (err) {
-          console.log(err);
-          
+          // Silent catch for autoplay restrictions
         }
       }
     };
 
     const cleanup = () => {
-      window.removeEventListener('scroll', startPlayback);
-      window.removeEventListener('wheel', startPlayback);
-      window.removeEventListener('touchmove', startPlayback);
       window.removeEventListener('click', startPlayback);
       window.removeEventListener('touchstart', startPlayback);
-      window.removeEventListener('keydown', startPlayback);
     };
 
-    // Add listeners for all common user gestures
-    window.addEventListener('scroll', startPlayback, { passive: true });
-    window.addEventListener('wheel', startPlayback, { passive: true });
-    window.addEventListener('touchmove', startPlayback, { passive: true });
     window.addEventListener('click', startPlayback);
     window.addEventListener('touchstart', startPlayback);
-    window.addEventListener('keydown', startPlayback);
-
-    // Initial check (some browsers allow autoplay)
-    startPlayback();
 
     return cleanup;
   }, [hasUserInteracted, isPlaying]);
@@ -191,14 +178,6 @@ export function Navigation() {
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
                 onError={handleAudioError}
-                onCanPlay={() => {
-                  // Try autoplay once audio is ready
-                  if (!isPlaying && !hasUserInteracted) {
-                    audioRef.current?.play().catch(() => {
-                      // This is expected to fail in strict browsers
-                    });
-                  }
-                }}
               />
             </div>
 
