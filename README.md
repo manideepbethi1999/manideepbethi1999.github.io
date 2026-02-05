@@ -35,10 +35,10 @@ This project is built with modern technologies:
 
 ```bash
 # Clone the repository
-git clone https://github.com/bethimanideep/bethimanideep.github.io.git
+git clone https://github.com/manideepbethi1999/manideepbethi1999.github.io.git
 
 # Navigate to the project directory
-cd bethimanideep.github.io
+cd manideepbethi1999.github.io
 
 # Install dependencies
 npm install
@@ -47,7 +47,7 @@ npm install
 npm run dev
 ```
 
-The application will open at `http://localhost:5173`
+The application will open at `http://localhost:8080`
 
 ## 📝 Available Scripts
 
@@ -123,7 +123,7 @@ git push origin main
 
 ## 📦 Deployment
 
-The site is deployed and accessible at: **https://bethimanideep.github.io**
+The site is deployed and accessible at: **https://manideepbethi1999.github.io/**
 
 To deploy your own version:
 
