@@ -146,21 +146,21 @@ export function HeroSection() {
 
           {/* Image Side */}
           <div className="order-1 lg:order-2 animate-fade-up opacity-0" style={{ animationDelay: "0.5s", animationFillMode: "forwards" }}>
-            <div className="relative group max-w-md mx-auto lg:max-w-none">
-              <div className="absolute -inset-4 bg-gradient-primary rounded-3xl opacity-20 blur-2xl group-hover:opacity-30 transition-opacity duration-500" />
+            <div className="relative group max-w-sm sm:max-w-sm lg:max-w-md mx-auto">
+              <div className="absolute -inset-4 bg-gradient-primary rounded-3xl opacity-20 blur-2xl group-hover:opacity-40 transition-opacity duration-500" />
               <div className="relative aspect-square rounded-3xl bg-secondary/30 overflow-hidden border border-border/50 backdrop-blur-sm">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/20" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-64 h-64 rounded-full bg-gradient-primary opacity-10 blur-3xl animate-pulse-glow" />
+                  <div className="w-48 h-48 rounded-full bg-gradient-primary opacity-10 blur-3xl animate-pulse-glow" />
                 </div>
                 <img
                   src="/Mani.jpg"
                   alt="Manideep Bethi"
-                  className="relative z-10 w-full h-full object-cover rounded-3xl transform group-hover:scale-105 transition-transform duration-700"
+                  className="relative z-10 w-full h-full object-cover rounded-2xl transform group-hover:scale-105 transition-transform duration-700 shadow-2xl"
                 />
                 {/* Decorative corner elements */}
-                <div className="absolute top-4 left-4 w-16 h-16 border-t-2 border-l-2 border-primary/30 rounded-tl-3xl z-20" />
-                <div className="absolute bottom-4 right-4 w-16 h-16 border-b-2 border-r-2 border-accent/30 rounded-br-3xl z-20" />
+                <div className="absolute top-2 left-2 w-12 h-12 border-t-2 border-l-2 border-primary/30 rounded-tl-2xl z-20" />
+                <div className="absolute bottom-2 right-2 w-12 h-12 border-b-2 border-r-2 border-accent/30 rounded-br-2xl z-20" />
               </div>
             </div>
           </div>
