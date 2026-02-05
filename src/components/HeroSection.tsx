@@ -1,4 +1,4 @@
-import { ArrowDown, Github, Linkedin, Twitter, Sparkles } from "lucide-react";
+import { Github, Linkedin, Twitter,  } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
@@ -58,7 +58,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <section className="min-h-screen flex items-center justify-center relative overflow-hidden py-20">
       {/* Enhanced Background Elements - Made transparent to show StarField */}
       <div className="absolute inset-0 bg-transparent" />
       
@@ -83,7 +83,7 @@ export function HeroSection() {
       {/* Grid Pattern Overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] opacity-30" />
       
-      <div className="container mx-auto px-6 relative z-10 pt-20 pb-10 lg:pt-0">
+      <div className="container mx-auto px-6 relative z-10 pt-10 pb-10 lg:pt-0">
         <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
           {/* Content Side */}
           <div className="text-center lg:text-left order-2 lg:order-1">
