@@ -54,7 +54,7 @@ export function Footer() {
               <h3 className="font-display text-lg font-semibold text-foreground mb-4">Connect</h3>
               <div className="flex items-center gap-3">
                 {[
-                  { icon: Github, href: "https://github.com/manideepbethi1999", label: "GitHub" },
+                  { icon: Github, href: "https://github.com/bethimanideep", label: "GitHub" },
                   { icon: Linkedin, href: "https://www.linkedin.com/in/manideepbethi/", label: "LinkedIn" },
                   { icon: Twitter, href: "#", label: "Twitter" },
                 ].map(({ icon: Icon, href, label }) => (

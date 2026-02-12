@@ -242,12 +242,12 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
               Live Demo
             </a>
           </Button>
-          {/* <Button variant="outline" size="lg" asChild className="group/btn flex-1 border-2">
+          <Button variant="outline" size="lg" asChild className="group/btn flex-1 border-2">
             <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
               <Github size={18} className="group-hover/btn:scale-110 transition-transform duration-300" />
               Code
             </a>
-          </Button> */}
+          </Button>
         </div>
       </div>
     </div>
